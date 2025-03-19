@@ -2,8 +2,13 @@ using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
+    HidingSpotScript hidespot = null;
+
+    public RectTransform Canvas;
+
     public AudioClip[] MarcheHerbe, MarcheBois;
     AudioSource audioSource;
 
@@ -28,7 +33,13 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
-        if (!isMirrorVisible) speed = 2.0f;
+        if (!isMirrorVisible)
+        {
+            if (!Input.GetKey(KeyCode.LeftShift))
+                speed = 2.5f;
+            else
+                speed = 4.0f;
+        }
         else speed = 0.6f;
 
         rb.linearVelocity = (Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right) * speed + new Vector3(0, rb.linearVelocity.y, 0);
@@ -42,15 +53,34 @@ public class PlayerScript : MonoBehaviour
         transform.localRotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * sensi, 0);
 
         RaycastHit hit;
-        if (Input.GetKeyDown(KeyCode.Mouse0) && Physics.Raycast(transform.position, cam.forward, out hit, 10))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, 10))
         {
-            Debug.Log(hit.transform.name, hit.transform.gameObject);
+            Debug.Log(hit.transform.name);
 
-            if (!isEntranceOpen && hit.transform.tag == "Entrancedoor")
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                hit.transform.GetComponent<Animator>().SetBool("IsOpen", true);//.Play("EntranceDoorOpen");
-                //isEntranceOpen = true;
+                if (!isEntranceOpen && hit.transform.tag == "Entrancedoor")
+                {
+                    hit.transform.GetComponent<Animator>().SetBool("IsOpen", true);
+                }
+
+                if (hit.transform.tag == "hidespot" && hidespot == null)
+                {
+                    hidespot = hit.transform.GetComponent<HidingSpotScript>();
+                    transform.position = hidespot.hidePos.position;
+                    transform.rotation = hidespot.hidePos.rotation;
+                    transform.localScale = new Vector3(transform.localScale.x, hidespot.isHidingCrouch ? 0.4f : 0.8f, transform.localScale.z);
+                }
             }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.E) && hidespot != null)
+        {
+            transform.position = hidespot.outHidePos.position;
+            transform.rotation = hidespot.outHidePos.rotation;
+            transform.localScale = new Vector3(transform.localScale.x, 0.8f, transform.localScale.z);
+            hidespot = null;
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
