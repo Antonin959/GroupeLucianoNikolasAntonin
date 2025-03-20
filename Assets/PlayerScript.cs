@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
-    HidingSpotScript hidespot = null;
+    static HidingSpotScript hidespot = null;
 
     public Camera viewCam;
     public RectTransform Canvas;
@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour
                     transform.localScale = new Vector3(transform.localScale.x, hidespot.isHidingCrouch ? 0.4f : 0.8f, transform.localScale.z);
                 }
             }
-            if (hit.transform.tag == "hidespot" && hidespot == null)
+            if (hit.transform.tag == "hidespot" && !isHiding())
             {
                 Vector3 screenpos = viewCam.WorldToViewportPoint(hit.transform.GetComponent<HidingSpotScript>().hidePos.position);
 
@@ -122,5 +122,13 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.gameObject.name == "ManoirTeleporter")
             transform.position = spawnpos.position;
+    }
+
+
+    public static bool isHiding()
+    {
+        if (hidespot == null)
+            return false;
+        return true;
     }
 }
