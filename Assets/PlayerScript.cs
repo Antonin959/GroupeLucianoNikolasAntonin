@@ -7,7 +7,9 @@ public class PlayerScript : MonoBehaviour
 {
     HidingSpotScript hidespot = null;
 
+    public Camera viewCam;
     public RectTransform Canvas;
+    public Image HideKey;
 
     public AudioClip[] MarcheHerbe, MarcheBois;
     AudioSource audioSource;
@@ -52,6 +54,8 @@ public class PlayerScript : MonoBehaviour
         cam.transform.localRotation = Quaternion.Euler(rotX, 0, 0);
         transform.localRotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * sensi, 0);
 
+        HideKey.gameObject.SetActive(false);
+
         RaycastHit hit;
         if (Physics.Raycast(cam.position, cam.forward, out hit, 10))
         {
@@ -72,8 +76,14 @@ public class PlayerScript : MonoBehaviour
                     transform.localScale = new Vector3(transform.localScale.x, hidespot.isHidingCrouch ? 0.4f : 0.8f, transform.localScale.z);
                 }
             }
-        }
+            if (hit.transform.tag == "hidespot" && hidespot == null)
+            {
+                Vector3 screenpos = viewCam.WorldToViewportPoint(hit.transform.GetComponent<HidingSpotScript>().hidePos.position);
 
+                HideKey.rectTransform.position = new Vector3(screenpos.x * Screen.width, screenpos.y * Screen.height, 0);
+                HideKey.gameObject.SetActive(true);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.E) && hidespot != null)
         {

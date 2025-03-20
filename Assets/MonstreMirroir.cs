@@ -3,7 +3,6 @@ using UnityEngine.AI;
 
 public class MonstreMirroir : MonoBehaviour
 {
-
     public RenderTexture camRender;
 
     NavMeshAgent agent;
