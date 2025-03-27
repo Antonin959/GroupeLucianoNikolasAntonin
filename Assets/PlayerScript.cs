@@ -35,6 +35,8 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
+        TriggerStay();
+
         if (!isMirrorVisible)
         {
             if (!Input.GetKey(KeyCode.LeftShift))
@@ -59,8 +61,6 @@ public class PlayerScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.position, cam.forward, out hit, 10))
         {
-            Debug.Log(hit.transform.name);
-
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 if (!isEntranceOpen && hit.transform.tag == "Entrancedoor")
@@ -118,10 +118,39 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    GameObject TriggerObj = null;
+
+    void TriggerStay()
+    {
+        if (TriggerObj != null)
+        {
+            if (isMirrorVisible && TriggerObj.tag == "MirorLight")
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+                {
+                    Debug.DrawLine(cam.transform.position, hit.point, Color.blue);
+                    if (hit.collider.tag == "MonstreMiroir")
+                    {
+                        hit.collider.transform.parent.GetComponent<MonstreMirroir>().Freeze(hit.point);
+                        TriggerObj.transform.parent.GetComponent<MirrorLightTimer>().timer = 10;
+                    }
+                }
+            }
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
+        TriggerObj = other.gameObject;
+
         if (other.gameObject.name == "ManoirTeleporter")
             transform.position = spawnpos.position;
+        
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        TriggerObj = null;
     }
 
 

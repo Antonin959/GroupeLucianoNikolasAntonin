@@ -7,6 +7,8 @@ TagManager:
   - Entrancedoor
   - GroundHerbe
   - hidespot
+  - MirorLight
+  - MonstreMiroir
   layers:
   - Default
   - TransparentFX
