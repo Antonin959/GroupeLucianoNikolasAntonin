@@ -9,6 +9,7 @@ TagManager:
   - hidespot
   - MirorLight
   - MonstreMiroir
+  - inDoor
   layers:
   - Default
   - TransparentFX

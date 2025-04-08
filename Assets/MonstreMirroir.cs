@@ -4,6 +4,8 @@ using System.Collections;
 
 public class MonstreMirroir : MonoBehaviour
 {
+    public AudioSource hideinsound;
+
     public GameObject FreezeEffect;
 
     float freezeTimer = 0;
@@ -13,7 +15,8 @@ public class MonstreMirroir : MonoBehaviour
 
     float waittimer;
 
-    bool onhide = false, viewhide = false;
+    bool onhide = false, viewhide = false, hidedeath = false;
+    bool onesound = true;
 
     NavMeshAgent agent;
     Transform player;
@@ -29,6 +32,8 @@ public class MonstreMirroir : MonoBehaviour
     }
     void Update()
     {
+        Debug.Log(waittimer);
+
         if (freezeTimer <= 0)
         {
             if (!PlayerScript.isHiding())
@@ -37,6 +42,8 @@ public class MonstreMirroir : MonoBehaviour
                 randomTarget = transform.position;
                 onhide = false;
                 viewhide = false;
+                hidedeath = false;
+                onesound = true;
             }
             else
             {
@@ -46,11 +53,16 @@ public class MonstreMirroir : MonoBehaviour
                     viewhide = Physics.Raycast(transform.position + new Vector3(0, transform.localScale.y * 0.5f, 0), player.position - transform.position, out RaycastHit hit)
                         && hit.collider.tag == "hidespot" && Vector3.Angle(transform.forward, player.position - transform.position) < 90;
 
+                    if (Vector3.Distance(transform.position, player.position) < 10)
+                    {
+                        hidedeath = true;
+                    }
+
 
                     Debug.LogWarning(hit.collider.tag);
                     Debug.LogWarning(Vector3.Angle(transform.forward, player.position - transform.position) < 90);
 
-                    waittimer = Random.Range(2f, 4f);
+                    waittimer = Random.Range(4f, 8f);
                 }
                 onhide = true;
 
@@ -70,10 +82,23 @@ public class MonstreMirroir : MonoBehaviour
 
                     if (Vector3.Distance(transform.position, player.position) < 5)
                     {
+                        if (hidedeath)
+                            Debug.LogError("player is dead !");
+
+                        if (onesound)
+                        {
+                            onesound = false;
+                            hideinsound.volume = 1;
+                            hideinsound.Play();
+                        }
+
                         agent.isStopped = true;
                         waittimer -= Time.deltaTime;
                         if (waittimer <= 0)
                             viewhide = false;
+
+                        if (waittimer < 1)
+                            hideinsound.volume *= 0.95f;
                     }
                 }
             }

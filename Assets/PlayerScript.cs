@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System.Xml.Linq;
 public class PlayerScript : MonoBehaviour
 {
     static HidingSpotScript hidespot = null;
@@ -46,7 +47,8 @@ public class PlayerScript : MonoBehaviour
         }
         else speed = 0.6f;
 
-        rb.linearVelocity = (Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right) * speed + new Vector3(0, rb.linearVelocity.y, 0);
+        if (!isHiding())
+            rb.linearVelocity = (Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right) * speed + new Vector3(0, rb.linearVelocity.y, 0);
 
         isWalking = Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0;
 
@@ -74,6 +76,17 @@ public class PlayerScript : MonoBehaviour
                     transform.position = hidespot.hidePos.position;
                     transform.rotation = hidespot.hidePos.rotation;
                     transform.localScale = new Vector3(transform.localScale.x, hidespot.isHidingCrouch ? 0.4f : 0.8f, transform.localScale.z);
+                }
+
+                if (hit.transform.tag == "inDoor")
+                {
+                    Debug.Log("hi" + " " + hit.transform.parent.name);
+                    Animator inDoorAnim = hit.transform.parent.GetComponent<Animator>();
+                    if (inDoorAnim.GetBool("State") == false)
+                    {
+                        inDoorAnim.Play("RightDoorAnim");
+                        inDoorAnim.SetBool("State", true);
+                    }
                 }
             }
             if (hit.transform.tag == "hidespot" && !isHiding())
