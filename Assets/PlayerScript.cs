@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
 
     public Transform spawnpos;
     public Animator mirroir;
+    GameObject mirroir_object;
 
     bool isEntranceOpen = false, isMirrorVisible = false, isWalking = false;
 
@@ -28,10 +29,14 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        mirroir_object = GameObject.Find("Mirroir_object");
+
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         cam = transform.GetChild(0);
         StartCoroutine(PlayRandomClips());
+
+        mirroir.gameObject.SetActive(false);
 
     }
     void Update()
@@ -88,6 +93,12 @@ public class PlayerScript : MonoBehaviour
                         inDoorAnim.SetBool("State", true);
                     }
                 }
+
+                if (hit.transform.name == "Mirroir_object" && mirroir_object.activeSelf)
+                {
+                    mirroir_object.SetActive(false);
+                    mirroir.gameObject.SetActive(true);
+                }
             }
             if (hit.transform.tag == "hidespot" && !isHiding())
             {
@@ -106,7 +117,7 @@ public class PlayerScript : MonoBehaviour
             hidespot = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && mirroir.gameObject.activeSelf)
         {
             isMirrorVisible = !isMirrorVisible;
             mirroir.SetBool("is", isMirrorVisible);
