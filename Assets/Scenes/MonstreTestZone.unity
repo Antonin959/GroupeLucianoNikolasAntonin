@@ -846,10 +846,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 318671439}
+      addedObject: {fileID: 318671445}
     - targetCorrespondingSourceObject: {fileID: -516098083770646512, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 957501420}
+      addedObject: {fileID: 957501423}
   m_SourcePrefab: {fileID: 100100000, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
 --- !u!4 &318671437 stripped
 Transform:
@@ -861,7 +861,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
   m_PrefabInstance: {fileID: 318671436}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &318671439
+--- !u!4 &318671440 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3542852092398272455, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
+  m_PrefabInstance: {fileID: 318671436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &318671441 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4083501151425157549, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
+  m_PrefabInstance: {fileID: 318671436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &318671445
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -883,16 +893,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
---- !u!4 &318671440 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -3542852092398272455, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
-  m_PrefabInstance: {fileID: 318671436}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &318671441 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4083501151425157549, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
-  m_PrefabInstance: {fileID: 318671436}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &319996011
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,7 +3079,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -516098083770646512, guid: c19c056bf6453ae4cb22a8c2928712cf, type: 3}
   m_PrefabInstance: {fileID: 318671436}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &957501420
+--- !u!64 &957501423
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
