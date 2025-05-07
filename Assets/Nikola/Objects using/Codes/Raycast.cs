@@ -29,22 +29,33 @@ public class Raycast : MonoBehaviour
         if (Physics.Raycast(_camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f)), transform.forward, out RaycastHit hit, rayLength))
         {
             var readableItem = hit.collider.GetComponent<NoteController>();
+            var useableObject = hit.collider.GetComponent<ObjectInteracting>();
+            var watchableObject = hit.collider.GetComponent<ObjectExam>();
+
             if (readableItem != null)
             {
                 _noteController = readableItem;
                 HighlightCurseur(true);
             }
-            else
+            
+            if (useableObject != null)
             {
-                ClearNote();
+                _objectInteracting = useableObject;
+                HighlightCurseur(true);
             }
 
-            var useableObject = hit.collider.GetComponent<ObjectInteracting>();
+            if (watchableObject != null)
+            {
+                _objectExam = watchableObject;
+                HighlightCurseur(true);
+            }
         }
         else
         {
-            ClearNote();
+            ClearInteraction();
         }
+
+
 
         if (_noteController != null)
         {
@@ -61,29 +72,51 @@ public class Raycast : MonoBehaviour
             }
         }
 
+        //Item qu'on peut prendre
         if (_objectInteracting != null)
         {
             if (tag == "Item")
             {
-
+                _objectInteracting.ShowObject();
+            }
+            else
+            {
+                _objectInteracting.DisableObject();
             }
         }
 
+        //Regarder les objets
         if (_objectExam != null)
         {
             if (tag == "ObjetVisu")
             {
-
+                _objectExam.Exam();
+            }
+            else
+            {
+                _objectExam.UnExam();
             }
         }
     }
 
-    void ClearNote()
+    void ClearInteraction()
     {
         if (_noteController != null)
         {
             HighlightCurseur(false);
             _noteController = null;
+        }
+
+        if (_objectExam != null)
+        {
+            HighlightCurseur(false);
+            _objectExam = null;
+        }
+
+        if (_objectInteracting != null)
+        {
+            HighlightCurseur(false);
+            _objectInteracting = null;
         }
     }
 
@@ -92,6 +125,8 @@ public class Raycast : MonoBehaviour
         if (on)
         {
             curseur.color = Color.red;
+
+            Debug.Log("hhhhh");
         }
         else
         {

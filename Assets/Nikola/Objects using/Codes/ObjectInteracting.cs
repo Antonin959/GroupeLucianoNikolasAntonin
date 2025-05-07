@@ -6,20 +6,26 @@ using System.Collections.Generic;
 public class ObjectInteracting : MonoBehaviour
 {
 
-    [Header("Input")]
-    [SerializeField] private KeyCode closeKey;
+    /*[Header("Input")]
+    [SerializeField] private KeyCode closeKey;*/
 
     [Space(10)]
     [SerializeField] private PlayerMovement player;
 
-    private Raycast _camera;
+    public Raycast _raycast;
 
     //private Transform _inspectObjectTransform;
 
-    public float deltaRotationX;
-    public float deltaRotationY;
+    //public float deltaRotationX;
+    //public float deltaRotationY;
 
-    public float rotateSpeed = 2;
+    public float rotationSpeed = 100f;
+
+    //public float rotateSpeed = 2;
+
+    bool pick;
+
+    bool add; //Prendre ou pas item
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,24 +36,37 @@ public class ObjectInteracting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
-            /*RaycastHit rayHit;
+            RaycastHit rayHit;
             if (CameraToMouseRay(Input.mousePosition, out rayHit)) 
             {
             
-            }*/
-        }
+            }
+        }*/
     }
 
     public void ShowObject()
     {
-
+        if (Input.GetKey(KeyCode.E) && pick == true)
+        {
+            /*this.transform.parent = target.transform;
+            this.transform.localEulerAngles = new Vector3(0, 0, 0);
+            this.GetComponent<Rigidbody>().isKinematic = true;
+            player.LockControl = true;
+            */
+        }
     }
 
     public void DisableObject()
     {
-
+        if (Input.GetKeyUp(KeyCode.E) && pick == false)
+        {
+            /*this.transform.parent = null;
+            this.GetComponent<Rigidbody>().isKinematic = false;
+            player.LockControl = false;
+            */
+        }
     }
 
     public void ShowItem()
