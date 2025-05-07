@@ -25,7 +25,9 @@ public class ObjectInteracting : MonoBehaviour
 
     bool pick;
 
-    bool add; //Prendre ou pas item
+    private ObjectExam _objExam;
+
+    //bool add; Prendre ou pas item
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,6 +57,8 @@ public class ObjectInteracting : MonoBehaviour
             this.GetComponent<Rigidbody>().isKinematic = true;
             player.LockControl = true;
             */
+
+            _objExam.Exam();
         }
     }
 
@@ -66,16 +70,36 @@ public class ObjectInteracting : MonoBehaviour
             this.GetComponent<Rigidbody>().isKinematic = false;
             player.LockControl = false;
             */
+
+            _objExam.UnExam();
         }
     }
 
-    public void ShowItem()
+    public void TakeItem()
     {
+        if (Input.GetKey(KeyCode.E) && pick == true)
+        {
+            /*this.transform.parent = target.transform;
+            this.transform.localEulerAngles = new Vector3(0, 0, 0);
+            this.GetComponent<Rigidbody>().isKinematic = true;
+            player.LockControl = true;
+            */
 
+            if (Input.GetKey(KeyCode.E))
+            {
+                
+            }
+        }
     }
 
     public void DisableItem()
     {
-
+        if (Input.GetKeyUp(KeyCode.E) && pick == false)
+        {
+            /*this.transform.parent = null;
+            this.GetComponent<Rigidbody>().isKinematic = false;
+            player.LockControl = false;
+            */
+        }
     }
 }

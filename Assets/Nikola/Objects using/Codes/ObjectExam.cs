@@ -13,6 +13,8 @@ public class ObjectExam : MonoBehaviour
 
     bool pick;
 
+    private ObjectInteracting _objectInteracting;
+
     //private Vector3 previousMousePosition;
 
     void Update()
@@ -41,24 +43,27 @@ public class ObjectExam : MonoBehaviour
 
     public void Exam()
     {
-        if (Input.GetKey(KeyCode.E) && pick == true)
+        if (Input.GetKey(KeyCode.E) && pick == false)
         {
-            /*this.transform.parent = target.transform;
-            this.transform.localEulerAngles = new Vector3(0, 0, 0);
-            this.GetComponent<Rigidbody>().isKinematic = true;
-            player.LockControl = true;
-            */
+           
+        }
+
+        else
+        {
+            
         }
     }
 
     public void UnExam()
     {
-        if (Input.GetKeyUp(KeyCode.E) && pick == false)
+        if (Input.GetKey(KeyCode.E) && pick == true)
         {
-            /*this.transform.parent = null;
-            this.GetComponent<Rigidbody>().isKinematic = false;
-            player.LockControl = false;
-            */
+            
+        }
+
+        else
+        {
+            
         }
     }
 }

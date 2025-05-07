@@ -125,8 +125,6 @@ public class Raycast : MonoBehaviour
         if (on)
         {
             curseur.color = Color.red;
-
-            Debug.Log("hhhhh");
         }
         else
         {
