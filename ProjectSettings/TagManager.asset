@@ -11,6 +11,7 @@ TagManager:
   - MonstreMiroir
   - inDoor
   - takable
+  - flying
   layers:
   - Default
   - TransparentFX
