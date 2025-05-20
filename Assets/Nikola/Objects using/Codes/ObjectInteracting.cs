@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ public class ObjectInteracting : MonoBehaviour
     bool pick;
 
     private ObjectExam _objExam;
+
+    private Transform examinedObject; //Stocker objet
 
     //bool add; Prendre ou pas item
 
@@ -57,8 +60,6 @@ public class ObjectInteracting : MonoBehaviour
             this.GetComponent<Rigidbody>().isKinematic = true;
             player.LockControl = true;
             */
-
-            _objExam.Exam();
         }
     }
 
@@ -70,8 +71,6 @@ public class ObjectInteracting : MonoBehaviour
             this.GetComponent<Rigidbody>().isKinematic = false;
             player.LockControl = false;
             */
-
-            _objExam.UnExam();
         }
     }
 

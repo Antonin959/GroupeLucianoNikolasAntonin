@@ -26,7 +26,7 @@ public class Raycast : MonoBehaviour
 
     private void Update()
     {
-        if (Physics.Raycast(_camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f)), transform.forward, out RaycastHit hit, rayLength))
+        if (Physics.Raycast(_camera.transform.position, transform.forward, out RaycastHit hit, rayLength))
         {
             var readableItem = hit.collider.GetComponent<NoteController>();
             var useableObject = hit.collider.GetComponent<ObjectInteracting>();
@@ -37,17 +37,19 @@ public class Raycast : MonoBehaviour
                 _noteController = readableItem;
                 HighlightCurseur(true);
             }
-            
+
             if (useableObject != null)
             {
                 _objectInteracting = useableObject;
                 HighlightCurseur(true);
+
             }
 
             if (watchableObject != null)
             {
                 _objectExam = watchableObject;
                 HighlightCurseur(true);
+
             }
         }
         else
@@ -56,18 +58,18 @@ public class Raycast : MonoBehaviour
         }
 
 
-
+        //Prendre les notes
         if (_noteController != null)
         {
             if (Input.GetKeyDown(interactKey))
             {
-                if (_noteController.isOpen) 
+                if (_noteController.isOpen)
                 {
                     _noteController.DisableNote();
                 }
-                else 
-                { 
-                    _noteController.ShowNote(); 
+                else
+                {
+                    _noteController.ShowNote();
                 }
             }
         }
@@ -75,7 +77,7 @@ public class Raycast : MonoBehaviour
         //Item qu'on peut prendre
         if (_objectInteracting != null)
         {
-            if (tag == "Item")
+            if (_objectInteracting.gameObject.tag == "Item")
             {
                 _objectInteracting.ShowObject();
             }
@@ -88,48 +90,53 @@ public class Raycast : MonoBehaviour
         //Regarder les objets
         if (_objectExam != null)
         {
-            if (tag == "ObjetVisu")
+            if (Input.GetKeyDown(interactKey))
             {
-                _objectExam.Exam();
+                if (_objectExam.gameObject.tag == "Objet")
+                {
+                    _objectExam.StartExam();
+                    //Debug.Log("AAAAAA");
+                }
+
+                else
+                {
+                    _objectExam.FinishExam();
+                }
+            }
+        }
+
+        void ClearInteraction()
+        {
+            if (_noteController != null)
+            {
+                HighlightCurseur(false);
+                _noteController = null;
+            }
+
+            if (_objectExam != null)
+            {
+                HighlightCurseur(false);
+                _objectExam = null;
+            }
+
+            if (_objectInteracting != null)
+            {
+                HighlightCurseur(false);
+                _objectInteracting = null;
+            }
+        }
+
+        void HighlightCurseur(bool on)
+        {
+            if (on)
+            {
+                curseur.color = Color.red;
             }
             else
             {
-                _objectExam.UnExam();
+                curseur.color = Color.white;
             }
         }
+
     }
-
-    void ClearInteraction()
-    {
-        if (_noteController != null)
-        {
-            HighlightCurseur(false);
-            _noteController = null;
-        }
-
-        if (_objectExam != null)
-        {
-            HighlightCurseur(false);
-            _objectExam = null;
-        }
-
-        if (_objectInteracting != null)
-        {
-            HighlightCurseur(false);
-            _objectInteracting = null;
-        }
-    }
-
-    void HighlightCurseur(bool on)
-    {
-        if (on)
-        {
-            curseur.color = Color.red;
-        }
-        else
-        {
-            curseur.color = Color.white;
-        }
-    }
-
 }
