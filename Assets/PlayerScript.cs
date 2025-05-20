@@ -27,6 +27,8 @@ public class PlayerScript : MonoBehaviour
     Rigidbody rb;
     Transform cam;
 
+    InventoryScript inventoryScript;
+
     void Start()
     {
         mirroir_object = GameObject.Find("Mirroir_object");
@@ -37,6 +39,8 @@ public class PlayerScript : MonoBehaviour
         StartCoroutine(PlayRandomClips());
 
         mirroir.gameObject.SetActive(false);
+
+        inventoryScript = GetComponent<InventoryScript>();
 
     }
     void Update()
@@ -70,6 +74,8 @@ public class PlayerScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                inventoryScript.TryTakeItem(hit.transform.gameObject);
+
                 if (!isEntranceOpen && hit.transform.tag == "Entrancedoor")
                 {
                     hit.transform.GetComponent<Animator>().SetBool("IsOpen", true);

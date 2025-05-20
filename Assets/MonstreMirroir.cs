@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 public class MonstreMirroir : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class MonstreMirroir : MonoBehaviour
     public GameObject FreezeEffect;
 
     float freezeTimer = 0;
+    public float flyingDistance = 5.0f;
 
     public RenderTexture camRender;
     const float randomSphereSize = 20;
@@ -21,6 +24,8 @@ public class MonstreMirroir : MonoBehaviour
     NavMeshAgent agent;
     Transform player;
     Vector3 randomTarget;
+
+    Dictionary<GameObject, float> FlyingObjects = new Dictionary<GameObject, float>();
 
     void Start()
     {
@@ -115,6 +120,27 @@ public class MonstreMirroir : MonoBehaviour
         camRender.Release();
         camRender.width = (int)(d * 130);
         camRender.height = (int)(d * 130);
+
+        Collider[] NearObjectDetector = Physics.OverlapSphere(transform.position, flyingDistance);
+        foreach (Collider nearObject in NearObjectDetector)
+        {
+            if (nearObject.tag == "flying")
+            {
+                if (FlyingObjects.ContainsKey(nearObject.gameObject))
+                    FlyingObjects[nearObject.gameObject] = 0.1f;
+                else
+                    FlyingObjects.Add(nearObject.gameObject, 0.1f);
+            }
+        }
+        List<GameObject> keys = new List<GameObject>(FlyingObjects.Keys);
+        foreach (GameObject nearObject in keys)
+        {
+            FlyingObjects[nearObject] -= Time.deltaTime;
+            if (FlyingObjects[nearObject] > 0)
+                nearObject.GetComponent<Rigidbody>().linearVelocity += Vector3.up * Physics.gravity.y * -1.2f * Time.deltaTime;
+            else
+                FlyingObjects.Remove(nearObject);
+        }
     }
 
     void GetRandomPos()

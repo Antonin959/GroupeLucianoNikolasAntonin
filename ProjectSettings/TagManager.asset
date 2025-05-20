@@ -10,6 +10,8 @@ TagManager:
   - MirorLight
   - MonstreMiroir
   - inDoor
+  - takable
+  - flying
   layers:
   - Default
   - TransparentFX
