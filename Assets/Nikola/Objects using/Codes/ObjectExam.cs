@@ -85,7 +85,15 @@ public class ObjectExam : MonoBehaviour
         //Reset la position de l'objet
         if (objectToInspect != null)
         {
-           //if (originalPositions.(objectToInspect))
+          if (originalPositions.ContainsKey(objectToInspect))
+            {
+                objectToInspect.position = Vector3.Lerp(objectToInspect.position, originalPositions[objectToInspect], 0.2f);
+            }
+
+          if (originalPositions.ContainsKey(objectToInspect))
+            {
+                objectToInspect.rotation = Quaternion.Lerp(objectToInspect.rotation, originalRotations[objectToInspect], 0.2f);
+            }
 
         }
     }
