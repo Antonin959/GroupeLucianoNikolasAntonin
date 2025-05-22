@@ -2936,9 +2936,8 @@ MonoBehaviour:
   isExamining: 0
   objectToInspect: {fileID: 1954870955}
   rotationSpeed: 100
-  _raycast: {fileID: 330585548}
+  _raycast: {fileID: 0}
   previousMousePosition: {x: 0, y: 0, z: 0}
-  pointcurseur: {fileID: 0}
 --- !u!1 &2035733552
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,6 +3250,70 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &3445650297488523778
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1023655742985170958, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_Name
+      value: Artefact Random
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.9184
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2603
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367517689942040320, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095753501685029631, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      propertyPath: m_text
+      value: Artefact
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5840250877575005755, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: 1d3795156d9f48c47b6468a2b868bd2b, type: 3}
 --- !u!1001 &8747472635545577040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3418,7 +3481,6 @@ MonoBehaviour:
   rotationSpeed: 100
   _raycast: {fileID: 0}
   previousMousePosition: {x: 0, y: 0, z: 0}
-  pointcurseur: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3435,3 +3497,4 @@ SceneRoots:
   - {fileID: 1931876733}
   - {fileID: 2035733556}
   - {fileID: 2112015542}
+  - {fileID: 3445650297488523778}
