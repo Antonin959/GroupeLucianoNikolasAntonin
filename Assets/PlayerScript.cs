@@ -126,7 +126,7 @@ public class PlayerScript : MonoBehaviour
             hidespot = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && mirroir.gameObject.activeSelf && InventoryScript.HasItemInventoryIndex(1))
+        if (Input.GetKeyDown(KeyCode.Q) && mirroir.gameObject.activeSelf)
         {
             isMirrorVisible = !isMirrorVisible;
             mirroir.SetBool("is", isMirrorVisible);
