@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class InventoryScript : MonoBehaviour
@@ -8,7 +9,7 @@ public class InventoryScript : MonoBehaviour
 
     const int invSize = 5;
 
-    int[] inventory;
+    static int[] inventory;
 
     void Start()
     {
@@ -37,6 +38,10 @@ public class InventoryScript : MonoBehaviour
             inventory[i] = ItemIndex;
  
             invSlots[i].sprite = itemsImage[ItemIndex-1];
+
+            if (Item.activeSelf)
+                Item.SetActive(false);
+
             break;
         }
     }
@@ -45,15 +50,29 @@ public class InventoryScript : MonoBehaviour
     /*
     Index Mirroir_object = 1
     Index teste = 2
+    Index flashlight = 3
     */
-    int GetIndex(string name)
+    static int GetIndex(string name)
     {
         return name switch
         {
             "Mirroir_object" => 1,
             "cube" => 2,
+            "FlashLight" => 3,
 
             _ => 0
         };
+    }
+
+    
+    public static bool HasItemInventoryName(string name) => HasItemInventoryIndex(GetIndex(name));
+    public static bool HasItemInventoryIndex(int itemIndex)
+    {
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (inventory[i] == itemIndex)
+                return true;
+        }
+        return false;
     }
 }
