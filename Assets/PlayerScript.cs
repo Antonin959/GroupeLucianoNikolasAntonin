@@ -31,6 +31,9 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         mirroir_object = GameObject.Find("Mirroir_object");
 
         audioSource = GetComponent<AudioSource>();
@@ -123,7 +126,7 @@ public class PlayerScript : MonoBehaviour
             hidespot = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && mirroir.gameObject.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Q) && mirroir.gameObject.activeSelf && InventoryScript.HasItemInventoryIndex(1))
         {
             isMirrorVisible = !isMirrorVisible;
             mirroir.SetBool("is", isMirrorVisible);

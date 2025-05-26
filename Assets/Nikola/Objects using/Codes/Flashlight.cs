@@ -11,7 +11,8 @@ public class Flashlight : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) 
+        //Permet de vérifier si l'objet est présent dans l'inventaire
+        if (InventoryScript.HasItemInventoryIndex(3) && Input.GetKeyDown(KeyCode.F)) 
         {
             FlashlightActive = !FlashlightActive;
             FlashlightLight.SetActive(FlashlightActive);
