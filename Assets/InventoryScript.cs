@@ -32,7 +32,7 @@ public class InventoryScript : MonoBehaviour
     void Update()
     {
 
-        selectIndex -= (int)(Input.GetAxis("Mouse ScrollWheel")*10);
+        if (!invLock) selectIndex -= (int)(Input.GetAxis("Mouse ScrollWheel")*10);
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             if (selectIndex >= inventory.Length) selectIndex = 0;
