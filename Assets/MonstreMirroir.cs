@@ -37,8 +37,6 @@ public class MonstreMirroir : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(waittimer);
-
         if (freezeTimer <= 0)
         {
             if (!PlayerScript.isHiding())

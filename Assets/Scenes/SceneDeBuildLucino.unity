@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.1
+  m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
@@ -4197,6 +4197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hideinsound: {fileID: 0}
   FreezeEffect: {fileID: 0}
+  flyingDistance: 5
   camRender: {fileID: 0}
 --- !u!1001 &638017771
 PrefabInstance:

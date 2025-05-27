@@ -4,10 +4,13 @@ using UnityEngine.UI;
 
 public class InventoryScript : MonoBehaviour
 {
+    public Image invSelector;
     public Transform inventorySlotsParent;
     Image[] invSlots;
 
     const int invSize = 5;
+    int selectIndex = 0;
+
 
     static int[] inventory;
 
@@ -21,7 +24,27 @@ public class InventoryScript : MonoBehaviour
             inventory[i] = 0;
             invSlots[i] = inventorySlotsParent.GetChild(i).GetComponent<Image>();
         }
+
+        SetSelectorPosition(0);
     }
+
+    void Update()
+    {
+
+        selectIndex += (int)(Input.GetAxis("Mouse ScrollWheel")*10);
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            Debug.Log("delta");
+            if (selectIndex >= inventory.Length) selectIndex = 0;
+            if (selectIndex < 0) selectIndex = inventory.Length - 1;
+
+            SetSelectorPosition(selectIndex);
+        }
+
+        Debug.Log(selectIndex);
+    }
+
+    void SetSelectorPosition(int invIndex) => invSelector.rectTransform.localPosition = new Vector3(90 * invIndex - 180, invSelector.rectTransform.localPosition.y);
 
     public void TryTakeItem(GameObject Item)
     {
