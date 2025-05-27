@@ -15,9 +15,23 @@ public class InventoryScript : MonoBehaviour
 
     static int[] inventory;
 
+    static bool invError = false;
+    static GameObject self;
+
     void Start()
     {
-        inventory = new int[invSize];
+        self = gameObject;
+
+        if (invSelector == null || inventorySlotsParent == null)
+        {
+            string errorMessDetail = invSelector == null ? "invSelector is null" : "" +
+                      inventorySlotsParent == null ? " inventorySlotsParent is null" : "";
+
+            Debug.LogError("Inventory parameters are null, inventory may not work! " + errorMessDetail);
+            invError = true;
+        }
+
+            inventory = new int[invSize];
         invSlots = new Image[invSize];
 
         for (int i = 0; i < invSize; i++)
@@ -27,6 +41,8 @@ public class InventoryScript : MonoBehaviour
         }
 
         SetSelectorPosition(0);
+
+
     }
 
     void Update()
@@ -97,6 +113,17 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     public static void HasItemInventoryIndex(int itemIndex, Action action)
     {
+        if (invError)
+        {
+            Debug.LogError("<b>Item action disable.</b> Inventory script error, please check last intetory error message");
+            return;
+        }
+        if (self == null)
+        {
+            Debug.LogError("<b>Item action disable.</b> Missing inventory script for item action\nId item executor : " + itemIndex);
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.E) && inventory[selectIndex] == itemIndex)
         {
             action();
