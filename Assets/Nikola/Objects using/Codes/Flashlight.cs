@@ -12,10 +12,12 @@ public class Flashlight : MonoBehaviour
     void Update()
     {
         //Permet de vérifier si l'objet est présent dans l'inventaire
-        if (InventoryScript.HasItemInventoryIndex(3) && Input.GetKeyDown(KeyCode.F)) 
+
+        InventoryScript.HasItemInventoryIndex(3, () =>
         {
             FlashlightActive = !FlashlightActive;
             FlashlightLight.SetActive(FlashlightActive);
-        }
+        });
+        
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -9,8 +10,8 @@ public class InventoryScript : MonoBehaviour
     Image[] invSlots;
 
     const int invSize = 5;
-    int selectIndex = 0;
-
+    static int selectIndex = 0;
+    public static bool invLock = false;
 
     static int[] inventory;
 
@@ -31,22 +32,19 @@ public class InventoryScript : MonoBehaviour
     void Update()
     {
 
-        selectIndex += (int)(Input.GetAxis("Mouse ScrollWheel")*10);
+        selectIndex -= (int)(Input.GetAxis("Mouse ScrollWheel")*10);
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            Debug.Log("delta");
             if (selectIndex >= inventory.Length) selectIndex = 0;
             if (selectIndex < 0) selectIndex = inventory.Length - 1;
 
             SetSelectorPosition(selectIndex);
         }
-
-        Debug.Log(selectIndex);
     }
 
     void SetSelectorPosition(int invIndex) => invSelector.rectTransform.localPosition = new Vector3(90 * invIndex - 180, invSelector.rectTransform.localPosition.y);
 
-    public void TryTakeItem(GameObject Item)
+    public void TryTakeItem(GameObject Item, Action action = null)
     {
         if (!Item.CompareTag("takable")) return;
 
@@ -61,6 +59,8 @@ public class InventoryScript : MonoBehaviour
             inventory[i] = ItemIndex;
  
             invSlots[i].sprite = itemsImage[ItemIndex-1];
+
+            action();
 
             if (Item.activeSelf)
                 Item.SetActive(false);
@@ -87,15 +87,21 @@ public class InventoryScript : MonoBehaviour
         };
     }
 
-    
-    public static bool HasItemInventoryName(string name) => HasItemInventoryIndex(GetIndex(name));
-    public static bool HasItemInventoryIndex(int itemIndex)
+
+    public static void HasItemInventoryName(string name, Action action) => HasItemInventoryIndex(GetIndex(name), action);
+    /// <summary>
+    /// Indexes :
+    /// Mirroir_object = 1
+    /// teste = 2.
+    /// flashlight = 3.
+    /// </summary>
+    public static void HasItemInventoryIndex(int itemIndex, Action action)
     {
-        for (int i = 0; i < inventory.Length; i++)
+        if (Input.GetKeyDown(KeyCode.E) && inventory[selectIndex] == itemIndex)
         {
-            if (inventory[i] == itemIndex)
-                return true;
+            action();
+            invLock = !invLock;
         }
-        return false;
     }
+    public static void UnLockInventory() => invLock = false;
 }

@@ -77,7 +77,10 @@ public class PlayerScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                inventoryScript.TryTakeItem(hit.transform.gameObject);
+                inventoryScript.TryTakeItem(hit.transform.gameObject, () =>
+                {
+                    mirroir.gameObject.SetActive(true);
+                });
 
                 if (!isEntranceOpen && hit.transform.tag == "Entrancedoor")
                 {
@@ -102,12 +105,6 @@ public class PlayerScript : MonoBehaviour
                         inDoorAnim.SetBool("State", true);
                     }
                 }
-
-                if (hit.transform.name == "Mirroir_object" && mirroir_object.activeSelf)
-                {
-                    mirroir_object.SetActive(false);
-                    mirroir.gameObject.SetActive(true);
-                }
             }
             if (hit.transform.tag == "hidespot" && !isHiding())
             {
@@ -126,11 +123,13 @@ public class PlayerScript : MonoBehaviour
             hidespot = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && mirroir.gameObject.activeSelf)
+        InventoryScript.HasItemInventoryIndex(1, () =>
         {
             isMirrorVisible = !isMirrorVisible;
             mirroir.SetBool("is", isMirrorVisible);
-        }
+        });
+
+
     }
 
     IEnumerator PlayRandomClips()
