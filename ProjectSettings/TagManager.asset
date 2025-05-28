@@ -12,6 +12,11 @@ TagManager:
   - inDoor
   - takable
   - flying
+  - Bras
+  - Item
+  - Note
+  - Objet
+  - inDoorCode
   layers:
   - Default
   - TransparentFX

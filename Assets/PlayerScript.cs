@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine.Audio;
 using UnityEngine.UI;
-using System.Xml.Linq;
+using TMPro;
 public class PlayerScript : MonoBehaviour
 {
     static HidingSpotScript hidespot = null;
@@ -29,11 +27,13 @@ public class PlayerScript : MonoBehaviour
 
     InventoryScript inventoryScript;
 
+    bool movecam = true;
+
+    static GameObject codedoor = null;
+    public TMP_InputField inputCode;
+
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         mirroir_object = GameObject.Find("Mirroir_object");
 
         audioSource = GetComponent<AudioSource>();
@@ -60,16 +60,21 @@ public class PlayerScript : MonoBehaviour
         else speed = 0.6f;
 
         if (!isHiding())
-            rb.linearVelocity = (Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right) * speed + new Vector3(0, rb.linearVelocity.y, 0);
+        {
 
+            rb.linearVelocity = (Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right) * speed + new Vector3(0, rb.linearVelocity.y, 0);
+        }
+        
         isWalking = Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0;
 
-        rotX -= Input.GetAxis("Mouse Y") * sensi;
-        rotX = Mathf.Clamp(rotX, -90, 90);
+        if (movecam)
+        {
+            rotX -= Input.GetAxis("Mouse Y") * sensi;
+            rotX = Mathf.Clamp(rotX, -90, 90);
 
-        cam.transform.localRotation = Quaternion.Euler(rotX, 0, 0);
-        transform.localRotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * sensi, 0);
-
+            cam.transform.localRotation = Quaternion.Euler(rotX, 0, 0);
+            transform.localRotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * sensi, 0);
+        }
         HideKey.gameObject.SetActive(false);
 
         RaycastHit hit;
@@ -97,13 +102,22 @@ public class PlayerScript : MonoBehaviour
 
                 if (hit.transform.tag == "inDoor")
                 {
-                    Debug.Log("hi" + " " + hit.transform.parent.name);
                     Animator inDoorAnim = hit.transform.parent.GetComponent<Animator>();
                     if (inDoorAnim.GetBool("State") == false)
                     {
                         inDoorAnim.Play("RightDoorAnim");
                         inDoorAnim.SetBool("State", true);
                     }
+                }
+
+                if (hit.transform.tag == "inDoorCode")
+                {
+                    if (!hit.transform.parent.GetComponent<Animator>().GetBool("State"))
+                    {
+
+                        codedoor = hit.transform.gameObject;
+                    }
+
                 }
             }
             if (hit.transform.tag == "hidespot" && !isHiding())
@@ -129,7 +143,32 @@ public class PlayerScript : MonoBehaviour
             mirroir.SetBool("is", isMirrorVisible);
         });
 
+        if (codedoor != null)
+        {
+            inputCode.gameObject.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (inputCode.text == "3651")
+                {
+                    Animator inDoorAnim = codedoor.transform.parent.GetComponent<Animator>();
+                    inDoorAnim.Play("RightDoorAnim");
+                    inDoorAnim.SetBool("State", true);
 
+                }
+                codedoor = null;
+            }
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            inputCode.gameObject.SetActive(false);
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        movecam = codedoor == null;
     }
 
     IEnumerator PlayRandomClips()
@@ -188,7 +227,7 @@ public class PlayerScript : MonoBehaviour
 
     public static bool isHiding()
     {
-        if (hidespot == null)
+        if (hidespot == null || codedoor == null)
             return false;
         return true;
     }
