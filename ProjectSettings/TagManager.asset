@@ -17,6 +17,7 @@ TagManager:
   - Note
   - Objet
   - inDoorCode
+  - invisiblefromplayer
   layers:
   - Default
   - TransparentFX

@@ -32,6 +32,8 @@ public class PlayerScript : MonoBehaviour
     static GameObject codedoor = null;
     public TMP_InputField inputCode;
 
+    public static bool gameStart = false;
+
     void Start()
     {
         mirroir_object = GameObject.Find("Mirroir_object");
@@ -90,6 +92,7 @@ public class PlayerScript : MonoBehaviour
                 if (!isEntranceOpen && hit.transform.tag == "Entrancedoor")
                 {
                     hit.transform.GetComponent<Animator>().SetBool("IsOpen", true);
+                    gameStart = true;
                 }
 
                 if (hit.transform.tag == "hidespot" && hidespot == null)

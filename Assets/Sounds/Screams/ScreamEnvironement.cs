@@ -20,6 +20,9 @@ public class ScreamEnvironement : MonoBehaviour
     }
     void Update()
     {
+        if (!PlayerScript.gameStart)
+            return;
+
         //Debug.Log(timer);
 
         timer -= Time.deltaTime;
